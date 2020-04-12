@@ -9,9 +9,7 @@ class App extends StatefulWidget {
 class _AppState extends State<App> {
 
   List<String> _list = ["Apple", "Ball", "Cat", "Dog", "Elephant"];
-
-
-  
+  bool isFavorite = false;
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +26,22 @@ class _AppState extends State<App> {
         ),
       ),
       body: ReorderableListView(
-  children: _list.map((item) => ListTile(key: Key("$item"), title: Text("$item"), trailing: Icon(Icons.menu),)).toList(),
+  children: _list.map((item) => ListTile(
+    key: Key("$item"),
+    title: Text("$item",style: TextStyle(fontSize: 20.0),), 
+    contentPadding: EdgeInsets.all(5),
+   
+    leading: InkWell(
+            onTap: () {
+              isFavorite = !isFavorite;
+              setState(() {
+              });
+            },
+            child: isFavorite ? Icon(
+              Icons.bookmark,
+              color: Colors.black,
+            ): Icon(Icons.bookmark_border)),
+    )).toList(),
       onReorder: (int start, int current) {
         // dragging from top to bottom
         if (start < current) {
